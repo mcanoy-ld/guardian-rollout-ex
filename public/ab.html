@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/icons.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
+</head>
+<body>
+    <div class="dashboard"><!-- Dashboard -->
+        <section class="navigation"><!-- Navigation -->
+
+            <div>
+                <span class="material-icons-outlined"> rocket_launch </span>
+                <span class="material-icons-outlined"> trending_up </span>
+                <span class="material-icons-outlined"> people_alt </span>
+                <span class="material-icons-outlined"> insert_invitation </span>
+                <span class="material-icons-outlined">settings_suggest</span>
+            </div>
+
+        </section><!-- Navigation End -->
+
+        <section class="main"><!-- Main -->
+            
+
+            <div class="title">
+                <h1>Guardian Rollout Example</h1>
+            </div>
+
+            <div class="project_list"><!-- Project List -->
+
+                <div class="project" data-status="finished" title="Finished Project"><!-- Project1 -->
+                    <div class="category category_color1"></div>
+                    <h2>Actions</h2>
+                    <p><button class="styled-button" role="button" id="startTesting">Start Testing</button></p>
+                    <p><button class="styled-button" role="button" id="endTesting">Stop Testing</button></p>
+                    <p><button class="styled-button" role="button" id="resetCounters">Reset Graph</button></p>
+                        
+
+                </div><!-- Project1 End -->
+
+                <div class="project" data-status="ongoing" title="Ongoing Project"><!-- Project2 -->
+                    <div class="category"></div>
+                    <h2>Control</h2>
+                    <canvas id="controlChart" width="400" height="400"></canvas>
+
+                </div><!-- Project2 End -->
+
+                <div class="project" data-status="stalled" title="Stalled Project"><!-- Project3 -->
+                    <div class="category category_color3"></div>
+                    <h2>Treatment</h2>
+                    <canvas id="treatmentChart" width="400" height="400"></canvas>
+
+                </div><!-- Project3 End -->
+
+                <div class="project" data-status="recent" title="Recent Project"><!-- Project4 -->
+                    <div class="category category_color4"></div>
+                    <h2 style="padding-bottom: 13px";>Rollout Parameters</h2>
+                    <form class="rolloutp" id="rolloutForm"> 
+                        <fieldset>
+                    <div>
+                        <label for="requestInterval">Request Interval: <span id="requestIntervalValue">100ms</span></label>
+                        <input type="range" min="100" max="1000" value="100" step="100" class="slider" id="requestInterval">
+                    </div>
+                    <div>
+                        <label for="state">Treatment Error Rate: <span id="treatmentErrorValue">80%</span></label>
+                        <input type="range" min="5" max="100" value="80" step="5" class="slider" id="treatmentError">
+                    </div>
+                    <div>
+                        <label for="state">Control Error Rate: <span id="controlErrorValue">5%</span></label> 
+                        <input type="range" min="5" max="50" value="5" step="5" class="slider" id="controlError">
+                    </div>
+                    </fieldset>
+                </form>
+                </div><!-- Project4 End -->
+
+                <div class="project" data-status="ongoing" title="Ongoing Project"><!-- Project5 -->
+                    <div class="category"></div>
+                    <h2>Raw Values</h2>
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Version</th>
+                                <th>Errors</th>
+                                <th>Total Req</th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Control</td>
+                                <td id="rawControlErrors">0</td>
+                                <td id="rawControlTotal">0</td>
+                                <td id="rawControlPercent">0</td>
+                            </tr>
+                            <tr>
+                                <td>Treatment</td>
+                                <td id="rawTreatmentErrors">0</td>
+                                <td id="rawTreatmentTotal">0</td>
+                                <td id="rawTreatmentPercent">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- Project5 End -->
+
+                <div class="project" data-status="stalled" title="Stalled Project"><!-- Project6 -->
+                    <div class="category category_color3"></div>
+                    <h2>Runtime</h2>
+                    <p><div class="runtime" id="timer">00:00:00</p>
+                </div><!-- Project6 End -->
+
+            </div><!-- Project List End -->
+
+        </section><!-- Main End -->
+
+
+    </div><!-- Dashboard End-->
+    
+    <script src="/js/script.js" > </script>
+</body>
+</html>

@@ -1,0 +1,421 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+}
+body{
+    margin: 0px;
+    background-color: aliceblue;
+}
+.dashboard{
+    padding: 0px 15px;
+    margin: 0 auto;
+}
+
+/* ==========================
+Navigation
+============================= */
+.dashboard .navigation{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+.dashboard .navigation img.logo{
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+}
+.dashboard .navigation img.user{
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+}
+.dashboard .navigation div .material-icons-outlined{
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 30px;
+    color: #727272;
+}
+
+/* ==========================
+Main Dashboard
+============================= */
+/* Search */
+.dashboard .main .search form{
+    position: relative;
+}
+.dashboard .main .search{
+    margin-top: 40px;
+}
+.dashboard .main .project_list .project form input{
+    width: 100%;
+}
+.dashboard .main .search .notification{
+    margin-top: 20px;
+}
+.dashboard .main .search .notification span:nth-child(1){
+    margin-right: 15px;
+    position: relative;
+}
+.dashboard .main .search .notification span:nth-child(1)::before{
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: sandybrown;
+    position: absolute;
+    border-radius: 50%;
+    top: 5px;
+}
+
+/* My Project */
+.dashboard .main .title{
+    margin-bottom: 30px;
+}
+.dashboard .main .title h1{
+    font-size: 35px;
+    line-height: 0px;
+}
+.dashboard .main .title{
+    margin-top: 40px;
+}
+.dashboard .main .title label{
+    margin-right: 15px;
+    color: #727272;
+    font-size: 16px;
+}
+.dashboard .main .title select{
+    border: none;
+    font-size: 16px;
+    background-color: rgba( 0 0 0 / 0);
+}
+
+/* Project List */
+.dashboard .main .project_list .project h2{
+    font-size: 20px;
+    line-height: 0;
+}
+.dashboard .main .project_list .project p{
+    color: #727272;
+}
+.dashboard .main .project_list .project ul {
+    list-style: none;
+    position: relative;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+.dashboard .main .project_list .project ul li {
+    position: relative;
+    color: #727272;
+    margin-left: 15px;
+}
+.dashboard .main .project_list .project ul li::before {
+    content: "\268A";
+    position: absolute;
+    left: -15px;
+    top: -5px;
+}
+.dashboard .main .project_list .project .meta img {
+    width: 50px;
+    height: 50px;
+    border-radius: 40px;
+    border: 4px solid aliceblue;
+}
+.dashboard .main .project_list .project .meta img.stack {
+    margin-left: -20px;
+}
+.dashboard .main .project_list .project .meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+.dashboard .main .project_list .project {
+    padding: 20px 20px 20px 60px;
+    background-color: #c5f6fa;
+    box-shadow: 1px 1px 40px rgba( 0 0 0 / .01);
+    margin-bottom: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+.dashboard .main .project_list .category {
+    width: 30px;
+    height: 50px;
+    background-color: rgb(51, 144, 153);
+    border-radius: 0px 10px 10px 0px;
+    position: absolute;
+    left: 0;
+}
+.category_color1{
+    background-color: rgb(140, 145, 210) !important;
+}
+.category_color2{
+    background-color: rebeccapurple !important;
+}
+.category_color3{
+    background-color: rgb(96, 155, 244) !important;
+}
+.category_color4{
+    background-color: rgb(140, 145, 210) !important;
+}
+
+.runtime{
+    background-color: rgb(96, 155, 244) !important;
+    text-align: center;
+    font-size: 50px;
+    border-radius: 25px;
+
+}
+
+/* ==========================
+Secondary Statics
+============================= */
+/* Chart */
+.dashboard .secondary .chart .complete{
+    text-align: center;
+    margin: 40px 0px;
+}
+.dashboard .secondary .chart .complete h3{
+    line-height: 0px;
+}
+.dashboard .secondary .chart .complete p{
+    color: #727272;
+}
+.dashboard .secondary .chart{
+    background-color: #fff;
+    padding: 15px;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+/* Recent Projects */
+.dashboard .secondary .recent_project .listing h2{
+    line-height: 0px;
+}
+.dashboard .secondary .recent_project .listing p{
+    color: #727272;
+}
+.dashboard .secondary .recent_project .listing{
+    display: flex;
+    justify-content: space-between;
+}
+.dashboard .secondary .recent_project{
+    background-color: #fff;
+    padding: 15px 15px 15px 60px;
+    position: relative;
+    margin-bottom: 30px;
+}
+.dashboard .secondary .recent_project .category{
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    position: absolute;
+    left: 10px;
+    margin-top: 20px;
+}
+
+/* ==========================
+Media Query 768xp 
+============================= */
+@media only screen and (min-width: 768px){
+    /* Dashboard Search */
+    .dashboard .main .search{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 70px;
+        margin-bottom: 50px;
+    }
+    section.main .project_list{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    section.main .project_list .project{
+        width: 47%;
+    }
+    section.main .project_list .project span{
+        margin-top: 15px;
+    }
+
+    /* Recent Projects */
+    section.secondary{
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        background-color: #ffffff;
+        padding-top: 70px;
+    }
+    section.secondary .chart{
+        width: 40%;
+    }
+    section.secondary .recent_project{
+        width: 55%;
+    }
+    section.secondary .recent_project .listing span{
+        margin-top: 15px;
+    }
+}
+
+@media only screen and (min-width: 1024px){
+    .dashboard .navigation,
+    .dashboard .navigation div span,
+    section.secondary{
+        display: block;
+    }
+    .dashboard .navigation{
+        width: 60px;
+        position: fixed;
+        z-index: 10;
+    }
+    section.main{
+        width: 60%;
+        margin-left: 90px;
+        margin-right: 20px;
+    }
+    section.secondary{
+        width: 27%;
+        padding-top: 0px;
+        position: fixed;
+        top: 20px;
+        right: 0px;
+        background-color: transparent;
+    }
+    section.secondary .chart,
+    section.secondary .recent_project{
+        width: 100%;
+        border-radius: 10px;
+    }
+    .dashboard .navigation div{
+        margin-top: 19vh;
+        margin-bottom: 19vh;
+    }
+    .dashboard .navigation div span{
+        margin-top: 5vh;
+    }
+}
+
+@media only screen and (min-width: 1111px){
+    section.main .project_list .project{
+        width: 32%;
+    }
+    section.main{
+        width: 65%;
+    }
+}
+@media only screen and (min-width: 1500px){
+    section.secondary .recent_project .listing:nth-child(4){
+        display: none;
+    }
+}
+
+
+
+/* added km */
+
+.dashboard .main .project_list .project form fieldset {
+    margin-top: 10px;
+    border: 0px;
+}
+.dashboard .main .project_list .project form fieldset div {
+    margin-top: 20px;
+    font-weight: bold;
+}
+.dashboard .main .project_list .project form input {
+    margin-top: 10px;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 100px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+button {
+    font-family: inherit;
+    font-size: 15px;
+    background: royalblue;
+    color: white;
+    padding: 0.7em 1em;
+    padding-left: 0.9em;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+    flex: 1;
+  }
+  
+  button span {
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  button svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  button:hover .svg-wrapper {
+    animation: fly-1 0.6s ease-in-out infinite alternate;
+  }
+  
+  button:hover svg {
+    transform: translateX(1.2em) rotate(45deg) scale(1.1);
+  }
+  
+  button:hover span {
+    transform: translateX(5em);
+  }
+  
+  button:active {
+    transform: scale(0.95);
+  }
+
+  /* Add this to align vertically */
+button > img,
+button > span {
+  vertical-align: middle;
+}
+  
+  @keyframes fly-1 {
+    from {
+      transform: translateY(0.1em);
+    }
+  
+    to {
+      transform: translateY(-0.1em);
+    }
+  }
