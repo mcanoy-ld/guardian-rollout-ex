@@ -38,24 +38,61 @@ document.getElementById('endTesting').addEventListener('click', async function()
 });
 
 document.getElementById('startTesting').addEventListener('click', async function() {
-    
     if (timer == 0) {
         document.getElementById('timer').textContent = '00:00:00';
         timer = setInterval(updateTimer, 1000);
     }
-
-    inProgress = true
-        while (inProgress) {
-            await new Promise(r => setTimeout(r, document.getElementById('requestInterval').value));
-            fetch(`/flag?input=nothing`)
-                .then(response => response.json())
-                .then(data => {
-                    updateRolloutValues(data);
-                    updateRawValues(data);
-                })
-                .catch(error => console.error('Error fetching data:', error));
-        }
+    
+    if(document.getElementById('cb5').checked) {
+        console.log("Client Side")
+        doClientSideSimulation();
+    } else {
+        console.log("Server Side")
+        doServerSideSimulation();
+        
+    }
 });
+
+async function doClientSideSimulation() {
+    inProgress = true
+    aErrorRate = document.getElementById('controlError').value
+    bErrorRate = document.getElementById('treatmentError').value
+    while (inProgress) {
+        await new Promise(r => setTimeout(r, document.getElementById('requestInterval').value));
+        clientcontext = {
+        kind: 'user',
+        key: 'client-side-user-key',
+        name: 'Mandy'
+        };
+        context.key = generateRandomUser();
+        await ldclient.identify(clientcontext); 
+
+        const flagValue = await ldclient.variation(flagKey, context, false);
+        const error = await sendError(flagValue, aErrorRate, bErrorRate);
+        fetch(`/clientside?flagValue=${flagValue}&error=${error}&context=${context.key}`)
+            .then(response => response.json())
+            .then(data => {
+                updateRolloutValues(data);
+                updateRawValues(data);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+    
+}
+
+async function doServerSideSimulation() {
+    inProgress = true
+    while (inProgress) {
+        await new Promise(r => setTimeout(r, document.getElementById('requestInterval').value));
+        fetch(`/flag?input=nothing`)
+            .then(response => response.json())
+            .then(data => {
+                updateRolloutValues(data);
+                updateRawValues(data);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+}
 
 // Chart JS
 var ctx = document.getElementById('controlChart').getContext('2d');
@@ -106,7 +143,7 @@ var ctx = document.getElementById('treatmentChart').getContext('2d');
 const treatmentChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Control Variant'],
+        labels: ['Treatment Variant'],
         datasets: [{
             label: 'No error',
             data: [100],
@@ -148,10 +185,10 @@ let timer = 0;
 let seconds = 0;
 
 function updateRolloutValues(data) {
-    controlChart.data.datasets[0].data[0] = data.falseErrorCount
-    controlChart.data.datasets[1].data[0] = data.falseVariantCount - data.falseErrorCount
-    treatmentChart.data.datasets[0].data[0] = data.trueErrorCount
-    treatmentChart.data.datasets[1].data[0] = data.trueVariantCount - data.trueErrorCount
+    controlChart.data.datasets[1].data[0] = data.falseErrorCount
+    controlChart.data.datasets[0].data[0] = data.falseVariantCount - data.falseErrorCount
+    treatmentChart.data.datasets[1].data[0] = data.trueErrorCount
+    treatmentChart.data.datasets[0].data[0] = data.trueVariantCount - data.trueErrorCount
     controlChart.update();
     treatmentChart.update();
 }
@@ -159,10 +196,10 @@ function updateRolloutValues(data) {
 function updateRawValues(data) {
     document.getElementById('rawTreatmentErrors').textContent = data.trueErrorCount;
     document.getElementById('rawTreatmentTotal').textContent = data.trueVariantCount;
-    document.getElementById('rawTreatmentPercent').textContent = data.trueVariantCount == 0 ? 0 : (data.trueErrorCount / data.trueVariantCount * 100).toFixed(2);
+    document.getElementById('rawTreatmentPercent').textContent = data.trueVariantCount == 0 ? 0 : (data.trueErrorCount / data.trueVariantCount * 100).toFixed(1);
     document.getElementById('rawControlErrors').textContent = data.falseErrorCount;
     document.getElementById('rawControlTotal').textContent = data.falseVariantCount;
-    document.getElementById('rawControlPercent').textContent = data.falseVariantCount == 0 ? 0 : (data.falseErrorCount / data.falseVariantCount * 100).toFixed(2);
+    document.getElementById('rawControlPercent').textContent = data.falseVariantCount == 0 ? 0 : (data.falseErrorCount / data.falseVariantCount * 100).toFixed(1);
  
 }
 

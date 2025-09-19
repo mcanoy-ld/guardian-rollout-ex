@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import  express from 'express';
 import { init } from '@launchdarkly/node-server-sdk';
 import path from 'path';
@@ -20,18 +21,24 @@ if (!sdkKey) {
 const ldClient = init(sdkKey);
 
 const featureFlagKey = process.env.LAUNCHDARKLY_FLAG_KEY ?? 'sample-feature';
-const errorMetricKey= process.env.LAUNCHDARKLY_METRIC_KEY ?? 'error event key'
+const errorMetricKey= process.env.LAUNCHDARKLY_METRIC_KEY ?? 'error event key';
+//The client id for the sdk (project+env value)
+const clientSideID= process.env.LAUNCHDARKLY_CLIENT_SIDE_ID ?? 'xxxxxxxx';
 
 let trueVariantCount=0;
 let falseVariantCount=0;
 let trueErrorCount=0;
 let falseErrorCount=0;
-let errorARate=5;
-let errorBRate=80;
-let requestInterval=1000;
+let errorARate=process.env.ERROR_A_RATE ? parseInt(process.env.ERROR_A_RATE) : 5;
+let errorBRate=process.env.ERROR_B_RATE ? parseInt(process.env.ERROR_B_RATE) : 80;
+let requestInterval=process.env.REQUEST_INTERVAL ? parseInt(process.env.REQUEST_INTERVAL) : 1000;
 
 const generateRandomUser = () => {
   return `nodeuser-${Math.random().toString(36).substring(2, 6)}`
+}
+
+const setAge = () => {
+  return Math.floor(Math.random() * 50) + 20;
 }
 
 function printValueAndBanner(flagValue) {
@@ -42,7 +49,9 @@ function printValueAndBanner(flagValue) {
 const context = {
   kind: 'user',
   key: generateRandomUser(),
-  name: 'Sandy',
+  name: process.env.DEFAULT_USER_NAME ?? 'Sandy',
+  location: process.env.DEFAULT_USER_LOCATION ?? 'US-West',
+  age: process.env.DEFAULT_USER_AGE ? parseInt(process.env.DEFAULT_USER_AGE) : 20
 };
 
 app.use('/', express.static('public'));
@@ -53,7 +62,9 @@ app.get('/', (req, res) => {
 
 // error handler
 app.get('/flag', async (req, res) => {
-  context.key = generateRandomUser()
+  context.key = generateRandomUser();
+  context.age = setAge();
+
   await ldClient.identify(context); 
   const flagValue = await ldClient.variation(featureFlagKey, context, false);
 
@@ -75,6 +86,39 @@ app.get('/flag', async (req, res) => {
   };
   res.status(200).send(JSON.stringify(jsonResponse));
 
+});
+
+app.get('/clientside', async (req, res) => {
+  const flagValue = req.query.flagValue === "true";
+  const errorValue = req.query.error === "true";
+  context.key = req.query.context;
+  flagValue ? trueVariantCount++ : falseVariantCount++;
+  errorValue && flagValue && trueErrorCount++;
+  errorValue && !flagValue && falseErrorCount++;
+
+  res.setHeader('Content-Type', 'application/json');
+
+  const jsonResponse = {
+    error: errorValue,
+    context: context,
+    variant: flagValue,
+    errorARate: errorARate,
+    errorBRate: errorBRate,
+    requestInterval: requestInterval,
+    trueVariantCount: trueVariantCount,
+    falseVariantCount:falseVariantCount,
+    trueErrorCount: trueErrorCount,
+    falseErrorCount: falseErrorCount
+  };
+  res.status(200).send(JSON.stringify(jsonResponse));
+});
+
+app.get('/clientsideidandflag', async (req, res) => {
+  const jsonResponse = {
+    clientSideID: clientSideID,
+    flagKey: featureFlagKey
+  }
+  res.status(200).send(JSON.stringify(jsonResponse));
 });
 
 app.get('/interval', async (req, res) => {

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Management Dashboard</title>
+    <title>Guardian Rollout Demo</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/icons.css">
     <link rel="stylesheet" href="/css/style.css">
-
+    <script src="https://unpkg.com/launchdarkly-js-client-sdk@3"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
 </head>
 <body>
@@ -31,7 +31,7 @@
             
 
             <div class="title">
-                <h1>Guardian Rollout Example</h1>
+                <h1>Guardian Rollout Demo</h1>
             </div>
 
             <div class="project_list"><!-- Project List -->
@@ -42,8 +42,11 @@
                     <p><button class="styled-button" role="button" id="startTesting">Start Testing</button></p>
                     <p><button class="styled-button" role="button" id="endTesting">Stop Testing</button></p>
                     <p><button class="styled-button" role="button" id="resetCounters">Reset Graph</button></p>
-                        
-
+                    <h2>SDK</h2>    
+                    <div class="checkbox-wrapper-10">
+                        <input class="tgl tgl-flip" id="cb5" type="checkbox" checked />
+                        <label class="tgl-btn" data-tg-off="Server-Side" data-tg-on="Client-Side" for="cb5"></label>
+                      </div>
                 </div><!-- Project1 End -->
 
                 <div class="project" data-status="ongoing" title="Ongoing Project"><!-- Project2 -->
@@ -77,6 +80,7 @@
                         <label for="state">Control Error Rate: <span id="controlErrorValue">5%</span></label> 
                         <input type="range" min="5" max="50" value="5" step="5" class="slider" id="controlError">
                     </div>
+                    
                     </fieldset>
                 </form>
                 </div><!-- Project4 End -->
@@ -89,7 +93,7 @@
                             <tr>
                                 <th>Version</th>
                                 <th>Errors</th>
-                                <th>Total Req</th>
+                                <th>Reqs</th>
                                 <th>%</th>
                             </tr>
                         </thead>
@@ -101,7 +105,7 @@
                                 <td id="rawControlPercent">0</td>
                             </tr>
                             <tr>
-                                <td>Treatment</td>
+                                <td>Treat</td>
                                 <td id="rawTreatmentErrors">0</td>
                                 <td id="rawTreatmentTotal">0</td>
                                 <td id="rawTreatmentPercent">0</td>
@@ -120,9 +124,10 @@
 
         </section><!-- Main End -->
 
-
     </div><!-- Dashboard End-->
     
+    <script src="/js/client-side.js" ></script>
     <script src="/js/script.js" > </script>
+    
 </body>
 </html>

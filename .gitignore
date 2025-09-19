@@ -2,3 +2,4 @@ node_modules/
 bin/
 public/one.html
 public/test.html
+.env
